@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto:wght@100;400&display=swap');
+
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+body {
+  margin: 0; /* Remove default margin */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  min-height: 100vh;
+  background-color: whitesmoke;
+  
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 5rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: space-around;
+
+  
+}
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 1.8rem;
+  color:coral;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+button {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color:coral;
+  padding: .5rem;
+  margin: .5rem;
+  background-color: whitesmoke;
+  border-radius: 5rem;
+  border: .3rem black solid
+  
+
+}
+
+/* TodoItem.css */
+.completed-button {
+  background-color: green;
+}
+
+.incomplete-button {
+  background-color: blue;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  
+}
+
+form label {
+  display: flex;
+  font-size: 1rem;
+  padding: 1.5rem;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+ 
+}
+
+input {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  border-radius: 2rem;
+}
+
+.footnotes {
+  display: flex;
+  flex-direction: column;
+  font-size: .9rem;
+  padding: 1.5rem;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+
+}

@@ -12,26 +12,40 @@ const Login = () => {
   const [modalContent, setModalContent] = useState('');              // State and setter for modal content.
   const dispatch = useDispatch();                                   // Get the dispatch function from Redux.
 
-  const handleLogin = async (e) => {                                // Define an async function to handle both login and registration.
-    e.preventDefault();                                             // Prevent default form behavior (page reload).
-    if (isRegistering) {                                            // Check if the user is trying to register.
-      if (password !== confirmPassword) {                           // Password confirmation check.
-        setModalContent("Passwords don't match!");                  // Set modal content for password mismatch.
-        setModalVisible(true);                                      // Show modal.
-        return;                                                     // Exit function early.
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    let serverResponse;
+  
+    if (isRegistering) {
+      if (password !== confirmPassword) {
+        setModalContent("Passwords don't match!");
+        setModalVisible(true);
+        return;
       }
-      dispatch(registerUser(username, password));                    // Dispatch the registration action.
-      setModalContent("You have been registered successfully! Please log in.");  // Set success modal content.
-      setModalVisible(true);                                        // Show modal.
-      setUsername('');                                              // Reset username.
-      setPassword('');                                              // Reset password.
-      setConfirmPassword('');                                       // Reset confirm password.
+  
+      serverResponse = await dispatch(registerUser(username, password)); 
+  
+      if (serverResponse && serverResponse.message) {
+        setModalContent(serverResponse.message); 
+      } else {
+        setModalContent("You have been registered successfully! Please log in.");
+      }
+      setModalVisible(true);
+      setUsername('');
+      setPassword('');
+      setConfirmPassword('');
     } else {
-      dispatch(loginUser(username, password));                       // Dispatch the login action.
-      setModalContent("Unsuccessful log in, try again!");           // Set modal content for unsuccessful login.
-      setModalVisible(true);                                        // Show modal.
+      serverResponse = await dispatch(loginUser(username, password)); 
+  
+      if (serverResponse && serverResponse.message) {
+        setModalContent(serverResponse.message); 
+      } else {
+        setModalContent("Unsuccessful log in, try again!");
+      }
+      setModalVisible(true);
     }
   };
+  
 
   return (
     <div>

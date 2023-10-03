@@ -24,8 +24,25 @@ function authenticateJWT(req, res, next) {
     }
 }
 
+// Middleware to validate the task content length
+function validateTaskLength(req, res, next) {
+    if (req.body.content && req.body.content.length > 140) {
+        return res.status(400).send({ message: 'Task content exceeds 140 characters' });
+    }
+    next();
+}
+
+// Middleware to ensure content type is JSON
+function ensureJSONContentType(req, res, next) {
+    const contentType = req.headers['content-type'];
+    if (!contentType || contentType.indexOf('application/json') !== 0) {
+        return res.status(400).send({ message: 'Content type must be application/json' });
+    }
+    next();
+}
+
 // POST endpoint to create a new task.
-router.post('/', authenticateJWT, async (req, res) => {
+router.post('/', authenticateJWT, validateTaskLength, ensureJSONContentType, async (req, res) => {
     try {
         const task = new Task(req.body);               
         await task.save();                             
@@ -46,7 +63,7 @@ router.get('/', authenticateJWT, async (req, res) => {
 });
 
 // PUT endpoint to update a task by its ID.
-router.put('/:taskId', authenticateJWT, async (req, res) => {
+router.put('/:taskId', authenticateJWT, ensureJSONContentType, async (req, res) => {
     try {
         const updatedTask = await Task.findByIdAndUpdate(req.params.taskId, req.body, { new: true });
         if (!updatedTask) {

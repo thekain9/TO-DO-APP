@@ -11,6 +11,10 @@ router.post('/register', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
+    if (!username.endsWith('@gmail.com')) {
+      return res.status(403).send({ message: 'Username must end with @gmail.com' });
+    }
+
     console.log("Request body:", req.body);
     // Check if user already exists in the database.
     const existingUser = await User.findOne({ username });
@@ -32,6 +36,10 @@ router.post('/login', async (req, res) => {
   try {
       const username = req.body.username;
       const password = req.body.password;
+
+      if (!username.endsWith('@gmail.com')) {
+        return res.status(403).send({ message: 'Invalid username' });
+      }
       // Checking if the username exists in the database.
       const user = await User.findOne({ username });
       if (!user) {

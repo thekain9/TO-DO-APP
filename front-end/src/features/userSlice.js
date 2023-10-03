@@ -54,13 +54,17 @@ export const registerUser = (username, password) => async (dispatch) => {
     });
     
     const data = await response.json();                   // Parsing the API response to JSON
-    if (data.token) {                                     // If a token exists in response (registration success)
-      dispatch(loginSuccess(data));                       // Dispatch loginSuccess action with response data
-    } else {                                              // Else if registration failed
-      dispatch(loginFailure(data.error || 'Registration failed!'));  // Dispatch loginFailure with error message
+    if (response.ok) {                                  // Check if the response status is OK
+      dispatch(loginSuccess(data));                     
+      return { message: "You have been registered successfully!" };
+    } else {                                            // If response is not OK
+      dispatch(loginFailure(data.error || 'Registration failed!'));
+      return data;  // Return the server's error response
     }
+
   } catch (error) {
-    dispatch(loginFailure(error.message));                // If there's an error in API call, dispatch loginFailure
+    dispatch(loginFailure(error.message));               
+    return { message: 'An error occurred during registration.' };
   }
 };
 

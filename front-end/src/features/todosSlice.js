@@ -60,6 +60,11 @@ export const viewTodoServer = () => async (dispatch) => {                 // Asy
         'Authorization': `Bearer ${getToken()}`                            // Use the token for authorization.
       },
     });
+    if (!response.ok) {
+      const data = await response.json();
+      console.error(data.message); // This will print the error message from the backend
+      return;
+  }
     const data = await response.json();                                    // Parse the response data.
     dispatch(viewTodo(data));                                              // Dispatch the viewTodo action with the response data.
   } catch (error) {
@@ -77,6 +82,11 @@ export const addTodoServer = (content) => async (dispatch) => {            // As
       },
       body: JSON.stringify({ content }),                                   // Send the content as the request body.
     });
+    if (!response.ok) {
+      const data = await response.json();
+      console.error(data.message); // This will print the error message from the backend
+      return;
+  }
     const data = await response.json();                                    // Parse the response data.
     dispatch(addTodo(data.content));                                       // Dispatch the addTodo action with the response data.
   } catch (error) {
@@ -94,6 +104,11 @@ export const editTodoServer = (id, content) => async (dispatch) => {
       },
       body: JSON.stringify({ content }),
     });
+    if (!response.ok) {
+      const data = await response.json();
+      console.error(data.message); // This will print the error message from the backend
+      return;
+  }
     const data = await response.json();
     dispatch(editTodo({ id, content: data.content }));
   } catch (error) {
@@ -110,6 +125,11 @@ export const deleteTodoServer = (id) => async (dispatch) => {
         'Authorization': `Bearer ${getToken()}`
       },
     });
+    if (!response.ok) {
+      const data = await response.json();
+      console.error(data.message); // This will print the error message from the backend
+      return;
+  }
     await response.json();
     dispatch(deleteTodo(id));
   } catch (error) {
@@ -127,6 +147,11 @@ export const completeTodoServer = (id) => async (dispatch) => {
       },
       body: JSON.stringify({ completed: true }), // Assuming this is the structure you need
     });
+    if (!response.ok) {
+      const data = await response.json();
+      console.error(data.message); // This will print the error message from the backend
+      return;
+  }
     const data = await response.json();
     dispatch(completeTodo(id));
   } catch (error) {
